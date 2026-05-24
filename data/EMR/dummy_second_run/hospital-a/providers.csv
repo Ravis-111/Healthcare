@@ -1,0 +1,4 @@
+ProviderID,FirstName,LastName,Specialization,DeptID,NPI
+PROV1001,Amelia,Hart,Cardiology,DEPT101,1182456712
+PROV1002,Noah,Singh,Neurology,DEPT102,2249812057
+PROV1003,Sofia,Mendez,Emergency Medicine,DEPT103,5512349876

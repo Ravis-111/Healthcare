@@ -1,0 +1,4 @@
+ProviderID,FirstName,LastName,Specialization,DeptID,NPI
+PROV2001,Ava,Parker,Pediatrics,DEPT201,3377401155
+PROV2002,Mason,Rivera,Radiology,DEPT202,4491228901
+PROV2003,Ella,Brooks,Oncology,DEPT203,6623954013
