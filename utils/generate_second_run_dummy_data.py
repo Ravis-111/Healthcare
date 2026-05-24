@@ -1,8 +1,11 @@
+from datetime import date, timedelta
 from pathlib import Path
 import csv
 
 BASE_DIR = Path(__file__).resolve().parent.parent / "data" / "EMR"
 OUTPUT_DIR = BASE_DIR / "dummy_second_run"
+CURRENT_DATE = date.today().isoformat()
+INCREMENTAL_DATE = (date.today() + timedelta(days=1)).isoformat()
 
 
 def write_csv(path: Path, header, rows):
@@ -25,19 +28,19 @@ hospital_a = {
         ["PROV1003", "Sofia", "Mendez", "Emergency Medicine", "DEPT103", 5512349876],
     ],
     "patients": [
-        ["HOSP1-000101", "Emma", "Davis", "A", "112-33-4455", "555-111-2233", "Female", "1990-03-12", "120 Oak Street, Austin, TX 78701", "2024-10-01"],
-        ["HOSP1-000102", "Liam", "Brown", "B", "223-44-5566", "555-222-3344", "Male", "1985-08-18", "88 Pine Avenue, Dallas, TX 75201", "2024-10-02"],
-        ["HOSP1-000103", "Olivia", "Wilson", "C", "334-55-6677", "555-333-4455", "Female", "1998-12-25", "17 Cedar Lane, Houston, TX 77002", "2024-10-03"],
+        ["HOSP1-000101", "Emma", "Davis", "A", "112-33-4455", "555-111-2233", "Female", "1990-03-12", "120 Oak Street, Austin, TX 78701", INCREMENTAL_DATE],
+        ["HOSP1-000102", "Liam", "Brown", "B", "223-44-5566", "555-222-3344", "Male", "1985-08-18", "88 Pine Avenue, Dallas, TX 75201", INCREMENTAL_DATE],
+        ["HOSP1-000103", "Olivia", "Wilson", "C", "334-55-6677", "555-333-4455", "Female", "1998-12-25", "17 Cedar Lane, Houston, TX 77002", INCREMENTAL_DATE],
     ],
     "encounters": [
-        ["ENC100001", "HOSP1-000101", "2024-10-01", "Inpatient", "PROV1001", "DEPT101", 93000, "2024-10-01", "2024-10-01"],
-        ["ENC100002", "HOSP1-000102", "2024-10-02", "Outpatient", "PROV1002", "DEPT102", 99213, "2024-10-02", "2024-10-02"],
-        ["ENC100003", "HOSP1-000103", "2024-10-03", "Emergency", "PROV1003", "DEPT103", 99283, "2024-10-03", "2024-10-03"],
+        ["ENC100001", "HOSP1-000101", CURRENT_DATE, "Inpatient", "PROV1001", "DEPT101", 93000, CURRENT_DATE, INCREMENTAL_DATE],
+        ["ENC100002", "HOSP1-000102", CURRENT_DATE, "Outpatient", "PROV1002", "DEPT102", 99213, CURRENT_DATE, INCREMENTAL_DATE],
+        ["ENC100003", "HOSP1-000103", CURRENT_DATE, "Emergency", "PROV1003", "DEPT103", 99283, CURRENT_DATE, INCREMENTAL_DATE],
     ],
     "transactions": [
-        ["TRANS100001", "ENC100001", "HOSP1-000101", "PROV1001", "DEPT101", "2024-10-01", "2024-10-01", "2024-10-02", "Follow-up", 450.00, "Insurance", 320.00, "CLAIM100001", "PAYOR1001", 93000, "I10", "Commercial", "MEDA10001", "MCARE10001", "2024-10-01", "2024-10-02"],
-        ["TRANS100002", "ENC100002", "HOSP1-000102", "PROV1002", "DEPT102", "2024-10-02", "2024-10-02", "2024-10-02", "Consultation", 180.00, "Self-pay", 180.00, "CLAIM100002", "PAYOR1002", 99213, "G47.33", "Self-Pay", "MEDA10002", "MCARE10002", "2024-10-02", "2024-10-02"],
-        ["TRANS100003", "ENC100003", "HOSP1-000103", "PROV1003", "DEPT103", "2024-10-03", "2024-10-03", "2024-10-03", "Emergency", 620.00, "Medicare", 500.00, "CLAIM100003", "PAYOR1003", 99283, "R05", "Medicare", "MEDA10003", "MCARE10003", "2024-10-03", "2024-10-03"],
+        ["TRANS100001", "ENC100001", "HOSP1-000101", "PROV1001", "DEPT101", CURRENT_DATE, CURRENT_DATE, CURRENT_DATE, "Follow-up", 450.00, "Insurance", 320.00, "CLAIM100001", "PAYOR1001", 93000, "I10", "Commercial", "MEDA10001", "MCARE10001", CURRENT_DATE, INCREMENTAL_DATE],
+        ["TRANS100002", "ENC100002", "HOSP1-000102", "PROV1002", "DEPT102", CURRENT_DATE, CURRENT_DATE, CURRENT_DATE, "Consultation", 180.00, "Self-pay", 180.00, "CLAIM100002", "PAYOR1002", 99213, "G47.33", "Self-Pay", "MEDA10002", "MCARE10002", CURRENT_DATE, INCREMENTAL_DATE],
+        ["TRANS100003", "ENC100003", "HOSP1-000103", "PROV1003", "DEPT103", CURRENT_DATE, CURRENT_DATE, CURRENT_DATE, "Emergency", 620.00, "Medicare", 500.00, "CLAIM100003", "PAYOR1003", 99283, "R05", "Medicare", "MEDA10003", "MCARE10003", CURRENT_DATE, INCREMENTAL_DATE],
     ],
 }
 
@@ -53,19 +56,19 @@ hospital_b = {
         ["PROV2003", "Ella", "Brooks", "Oncology", "DEPT203", 6623954013],
     ],
     "patients": [
-        ["HOSP2-000201", "Sophia", "Mills", "A", "445-66-7788", "555-444-5566", "Female", "1994-04-16", "55 Maple Drive, San Antonio, TX 78201", "2024-10-04"],
-        ["HOSP2-000202", "James", "Moran", "B", "556-77-8899", "555-555-6677", "Male", "1988-09-09", "102 Birch Road, Fort Worth, TX 76101", "2024-10-05"],
-        ["HOSP2-000203", "Aria", "Chen", "C", "667-88-9900", "555-666-7788", "Female", "2001-12-01", "9 Sunset Boulevard, El Paso, TX 79901", "2024-10-06"],
+        ["HOSP2-000201", "Sophia", "Mills", "A", "445-66-7788", "555-444-5566", "Female", "1994-04-16", "55 Maple Drive, San Antonio, TX 78201", INCREMENTAL_DATE],
+        ["HOSP2-000202", "James", "Moran", "B", "556-77-8899", "555-555-6677", "Male", "1988-09-09", "102 Birch Road, Fort Worth, TX 76101", INCREMENTAL_DATE],
+        ["HOSP2-000203", "Aria", "Chen", "C", "667-88-9900", "555-666-7788", "Female", "2001-12-01", "9 Sunset Boulevard, El Paso, TX 79901", INCREMENTAL_DATE],
     ],
     "encounters": [
-        ["ENC200001", "HOSP2-000201", "2024-10-04", "Outpatient", "PROV2001", "DEPT201", 99391, "2024-10-04", "2024-10-04"],
-        ["ENC200002", "HOSP2-000202", "2024-10-05", "Inpatient", "PROV2002", "DEPT202", 71020, "2024-10-05", "2024-10-05"],
-        ["ENC200003", "HOSP2-000203", "2024-10-06", "Routine Checkup", "PROV2003", "DEPT203", 11101, "2024-10-06", "2024-10-06"],
+        ["ENC200001", "HOSP2-000201", CURRENT_DATE, "Outpatient", "PROV2001", "DEPT201", 99391, CURRENT_DATE, INCREMENTAL_DATE],
+        ["ENC200002", "HOSP2-000202", CURRENT_DATE, "Inpatient", "PROV2002", "DEPT202", 71020, CURRENT_DATE, INCREMENTAL_DATE],
+        ["ENC200003", "HOSP2-000203", CURRENT_DATE, "Routine Checkup", "PROV2003", "DEPT203", 11101, CURRENT_DATE, INCREMENTAL_DATE],
     ],
     "transactions": [
-        ["TRANS200001", "ENC200001", "HOSP2-000201", "PROV2001", "DEPT201", "2024-10-04", "2024-10-04", "2024-10-05", "Routine", 260.00, "Insurance", 210.00, "CLAIM200001", "PAYOR2001", 99391, "Z00.00", "Commercial", "MEDB20001", "MCARE20001", "2024-10-04", "2024-10-05"],
-        ["TRANS200002", "ENC200002", "HOSP2-000202", "PROV2002", "DEPT202", "2024-10-05", "2024-10-05", "2024-10-05", "Follow-up", 420.00, "Medicare", 380.00, "CLAIM200002", "PAYOR2002", 71020, "M17.9", "Medicare", "MEDB20002", "MCARE20002", "2024-10-05", "2024-10-05"],
-        ["TRANS200003", "ENC200003", "HOSP2-000203", "PROV2003", "DEPT203", "2024-10-06", "2024-10-06", "2024-10-06", "Consultation", 540.00, "Self-pay", 540.00, "CLAIM200003", "PAYOR2003", 11101, "E11.9", "Self-Pay", "MEDB20003", "MCARE20003", "2024-10-06", "2024-10-06"],
+        ["TRANS200001", "ENC200001", "HOSP2-000201", "PROV2001", "DEPT201", CURRENT_DATE, CURRENT_DATE, CURRENT_DATE, "Routine", 260.00, "Insurance", 210.00, "CLAIM200001", "PAYOR2001", 99391, "Z00.00", "Commercial", "MEDB20001", "MCARE20001", CURRENT_DATE, INCREMENTAL_DATE],
+        ["TRANS200002", "ENC200002", "HOSP2-000202", "PROV2002", "DEPT202", CURRENT_DATE, CURRENT_DATE, CURRENT_DATE, "Follow-up", 420.00, "Medicare", 380.00, "CLAIM200002", "PAYOR2002", 71020, "M17.9", "Medicare", "MEDB20002", "MCARE20002", CURRENT_DATE, INCREMENTAL_DATE],
+        ["TRANS200003", "ENC200003", "HOSP2-000203", "PROV2003", "DEPT203", CURRENT_DATE, CURRENT_DATE, CURRENT_DATE, "Consultation", 540.00, "Self-pay", 540.00, "CLAIM200003", "PAYOR2003", 11101, "E11.9", "Self-Pay", "MEDB20003", "MCARE20003", CURRENT_DATE, INCREMENTAL_DATE],
     ],
 }
 
